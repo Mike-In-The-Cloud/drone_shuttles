@@ -2,7 +2,7 @@
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "VisualEditor0",
+            "Sid": "FinanceViewerAllow",
             "Effect": "Allow",
             "Action": [
                 "aws-portal:ViewAccount",
@@ -11,6 +11,14 @@
                 "cur:DescribeReportDefinitions"
             ],
             "Resource": "*"
+        },
+        {
+            "Sid": "FinanceViewerDeny",
+            "Effect": "Deny",
+            "Action":[
+                "aws-portal:ViewPaymentMethods",
+                "aws-portal:ModifyPaymentMethods"
+            ]
         }
     ]
 }

@@ -18,7 +18,8 @@
             "Action":[
                 "aws-portal:ViewPaymentMethods",
                 "aws-portal:ModifyPaymentMethods"
-            ]
+            ],
+            "Resource": "*"
         }
     ]
 }

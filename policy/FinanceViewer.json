@@ -1,0 +1,25 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "FinanceViewerAllow",
+            "Effect": "Allow",
+            "Action": [
+                "aws-portal:ViewAccount",
+                "aws-portal:ViewBilling",
+                "aws-portal:ViewUsage",
+                "cur:DescribeReportDefinitions"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "FinanceViewerDeny",
+            "Effect": "Deny",
+            "Action":[
+                "aws-portal:ViewPaymentMethods",
+                "aws-portal:ModifyPaymentMethods"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

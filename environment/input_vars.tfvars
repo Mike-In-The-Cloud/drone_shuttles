@@ -1,0 +1,7 @@
+cidr_block = "10.0.0.0/16"
+PublicSubnet1Param = "10.0.0.0/24"
+PublicSubnet2Param = "10.0.1.0/24"
+AppSubnet1Param = "10.0.2.0/24"
+AppSubnet2Param = "10.0.3.0/24"
+DatabaseSubnet1Param = "10.0.4.0/24"
+DatabaseSubnet2Param = "10.0.5.0/24"

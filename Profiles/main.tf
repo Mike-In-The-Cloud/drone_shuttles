@@ -18,14 +18,14 @@ module "casetsudy_vpc" {
     DatabaseSubnet2Param = var.DatabaseSubnet2Param
     
 }
-
+/*
 module "casestudy_efs" {
     source = "../modules/efs"
     efssubnetname = [output.AppSubnet1,output.AppSubnet2]
     efssgname = [output.EFSMountTargetSecurityGroup]
   
 }
-/*
+
 module "casestudy_databse" {
     source = "../modules/database"
   

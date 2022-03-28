@@ -11,7 +11,7 @@ resource "aws_vpc" "CaseStudyVPC" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "CaseStudyVPC"
+    Name = "${terraform.workspace}-CaseStudyVPC"
   }
 }
 
@@ -19,7 +19,7 @@ resource "aws_vpc" "CaseStudyVPC" {
 resource "aws_internet_gateway" "IGW-Casestudy" {    
   vpc_id =  aws_vpc.CaseStudyVPC.id  
   tags = {
-    Name = "IGW-Casestudy"
+    Name = "${terraform.workspace}-IGW-Casestudy"
   }            
 }
 
@@ -32,7 +32,7 @@ resource "aws_eip" "ElasticIPAddress1" {
    allocation_id = aws_eip.ElasticIPAddress1.id
    subnet_id = aws_subnet.PublicSubnet1.id
    tags = {
-    Name = "NATGateway1"
+    Name = "${terraform.workspace}-NATGateway1"
     } 
   }
 
@@ -44,7 +44,7 @@ resource "aws_eip" "ElasticIPAddress1" {
    allocation_id = aws_eip.ElasticIPAddress2.id
    subnet_id = aws_subnet.PublicSubnet2.id
    tags = {
-    Name = "NATGateway2"
+    Name = "${terraform.workspace}-NATGateway2"
     } 
   }
 
@@ -54,7 +54,7 @@ resource "aws_subnet" "PublicSubnet1" {
   availability_zone = data.aws_availability_zones.available-eu-central-1.names[0]
   cidr_block = "${var.PublicSubnet1Param}"  
   tags = {
-    Name = "PublicSubnet1"
+    Name = "${terraform.workspace}-PublicSubnet1"
   }     
 }
 
@@ -63,7 +63,7 @@ resource "aws_subnet" "PublicSubnet2" {
   availability_zone = data.aws_availability_zones.available-eu-central-1.names[1]
   cidr_block = "${var.PublicSubnet2Param}"  
   tags = {
-    Name = "PublicSubnet2"
+    Name = "${terraform.workspace}-PublicSubnet2"
   }     
 }
 
@@ -72,7 +72,7 @@ resource "aws_subnet" "AppSubnet1" {
   availability_zone = data.aws_availability_zones.available-eu-central-1.names[0]
   cidr_block = "${var.AppSubnet1Param}"  
   tags = {
-    Name = "AppSubnet1"
+    Name = "${terraform.workspace}-AppSubnet1"
   }     
 }
 
@@ -81,7 +81,7 @@ resource "aws_subnet" "AppSubnet2" {
   availability_zone = data.aws_availability_zones.available-eu-central-1.names[1]
   cidr_block = "${var.AppSubnet2Param}"  
   tags = {
-    Name = "AppSubnet2"
+    Name = "${terraform.workspace}-AppSubnet2"
   }     
 }
 
@@ -90,7 +90,7 @@ resource "aws_subnet" "DatabaseSubnet1" {
   availability_zone = data.aws_availability_zones.available-eu-central-1.names[0]
   cidr_block = "${var.DatabaseSubnet1Param}"  
   tags = {
-    Name = "DatabaseSubnet1"
+    Name = "${terraform.workspace}-DatabaseSubnet1"
   }     
 }
 
@@ -99,17 +99,17 @@ resource "aws_subnet" "DatabaseSubnet2" {
   availability_zone = data.aws_availability_zones.available-eu-central-1.names[1]
   cidr_block = "${var.DatabaseSubnet2Param}"  
   tags = {
-    Name = "DatabaseSubnet2"
+    Name = "${terraform.workspace}-DatabaseSubnet2"
   }     
 }
 
 #Elastic Cache Subnet Group
 resource "aws_elasticache_subnet_group" "ElasticacheSubnetGroup" {
-  name       = "ElasticacheSubnetGroup"
+  name       = "${terraform.workspace}-ElasticacheSubnetGroup"
   description = "This Elasticache subnet group selects the same subnets as is used for the Aurora DB in task 2"
   subnet_ids = [aws_subnet.AppSubnet1.id,aws_subnet.AppSubnet2.id]
   tags = {
-    Name = "ElasticacheSubnetGroup"
+    Name = "${terraform.workspace}-ElasticacheSubnetGroup"
   }
 }
 
@@ -121,7 +121,7 @@ resource "aws_route_table" "PublicRouteTable" {
     gateway_id = aws_internet_gateway.IGW-Casestudy.id
   }
   tags = {
-    Name = "PublicRouteTable"
+    Name = "${terraform.workspace}-PublicRouteTable"
   }
 }
 
@@ -132,7 +132,7 @@ resource "aws_route_table" "PrivateRouteTableAZ1" {
     gateway_id = aws_nat_gateway.NATGateway1.id
   }
   tags = {
-    Name = "PrivateRouteTableAZ1"
+    Name = "${terraform.workspace}-PrivateRouteTableAZ1"
   }
 }
 
@@ -143,7 +143,7 @@ resource "aws_route_table" "PrivateRouteTableAZ2" {
     gateway_id = aws_nat_gateway.NATGateway2.id
   }
   tags = {
-    Name = "PrivateRouteTableAZ2"
+    Name = "${terraform.workspace}-PrivateRouteTableAZ2"
   }
 }
  
@@ -180,7 +180,7 @@ resource "aws_route_table_association" "DatabaseSubnet2RTA" {
 
 #Security Group
 resource "aws_security_group" "AppInstanceSecurityGroup" {
-  name        = "AppInstanceSecurityGroup"
+  name        = "${terraform.workspace}-AppInstanceSecurityGroup"
   description = "Security Group allowing HTTP traffic for lab instances"
   vpc_id      = aws_vpc.CaseStudyVPC.id
 
@@ -193,12 +193,12 @@ resource "aws_security_group" "AppInstanceSecurityGroup" {
   }
 
   tags = {
-    Name = "AppInstanceSecurityGroup"
+    Name = "${terraform.workspace}-AppInstanceSecurityGroup"
   }
 }
 
 resource "aws_security_group" "RDSSecurityGroup" {
-  name        = "RDSSecurityGroup"
+  name        = "${terraform.workspace}-RDSSecurityGroup"
   description = "Security Group allowing RDS instances to have internet traffic"
   vpc_id      = aws_vpc.CaseStudyVPC.id
 
@@ -211,12 +211,12 @@ resource "aws_security_group" "RDSSecurityGroup" {
   }
 
   tags = {
-    Name = "RDSSecurityGroup"
+    Name = "${terraform.workspace}-RDSSecurityGroup"
   }
 }
 
 resource "aws_security_group" "ElastiCacheSecurityGroup" {
-  name        = "ElastiCacheSecurityGroup"
+  name        = "${terraform.workspace}-ElastiCacheSecurityGroup"
   description = "Security Group allowing ElastiCache to have internet traffic"
   vpc_id      = aws_vpc.CaseStudyVPC.id
 
@@ -229,12 +229,12 @@ resource "aws_security_group" "ElastiCacheSecurityGroup" {
   }
 
   tags = {
-    Name = "ElastiCacheSecurityGroup"
+    Name = "${terraform.workspace}-ElastiCacheSecurityGroup"
   }
 }
 
 resource "aws_security_group" "EFSMountTargetSecurityGroup" {
-  name        = "EFSMountTargetSecurityGroup"
+  name        = "${terraform.workspace}-EFSMountTargetSecurityGroup"
   description = "Security Group allowing traffic between EFS Mount Targets and Amazon EC2 instances"
   vpc_id      = aws_vpc.CaseStudyVPC.id
 
@@ -255,17 +255,17 @@ resource "aws_security_group" "EFSMountTargetSecurityGroup" {
   
 
   tags = {
-    Name = "EFSMountTargetSecurityGroup"
+    Name = "${terraform.workspace}-EFSMountTargetSecurityGroup"
   }
 }
 
 #RDS subnet GROUP
 resource "aws_db_subnet_group" "auroraSubnetGroup" {
-  name       = "aurorasubnetgroup"
+  name       = "${terraform.workspace}-aurorasubnetgroup"
   subnet_ids = [aws_subnet.DatabaseSubnet1.id, aws_subnet.DatabaseSubnet2.id]
 
   tags = {
-    Name = "auroraSubnetGroup"
+    Name = "${terraform.workspace}-auroraSubnetGroup"
   }
 }
 

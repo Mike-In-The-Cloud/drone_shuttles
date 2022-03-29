@@ -1,4 +1,4 @@
-data "aws_availability_zones" "available-eu-central-1" {
+data "aws_availability_zones" "available-AZs" {
   state = "available"
 }
 
@@ -50,8 +50,9 @@ resource "aws_eip" "ElasticIPAddress1" {
 
 #Subnets
 resource "aws_subnet" "PublicSubnet1" {    
+  #count = 2
   vpc_id =  aws_vpc.CaseStudyVPC.id
-  availability_zone = data.aws_availability_zones.available-eu-central-1.names[0]
+  availability_zone = data.aws_availability_zones.available-AZs.names[0]
   cidr_block = "${var.PublicSubnet1Param}"  
   tags = {
     Name = "${terraform.workspace}-PublicSubnet1"
@@ -60,7 +61,7 @@ resource "aws_subnet" "PublicSubnet1" {
 
 resource "aws_subnet" "PublicSubnet2" {    
   vpc_id =  aws_vpc.CaseStudyVPC.id
-  availability_zone = data.aws_availability_zones.available-eu-central-1.names[1]
+  availability_zone = data.aws_availability_zones.available-AZs.names[1]
   cidr_block = "${var.PublicSubnet2Param}"  
   tags = {
     Name = "${terraform.workspace}-PublicSubnet2"
@@ -69,7 +70,7 @@ resource "aws_subnet" "PublicSubnet2" {
 
 resource "aws_subnet" "AppSubnet1" {    
   vpc_id =  aws_vpc.CaseStudyVPC.id
-  availability_zone = data.aws_availability_zones.available-eu-central-1.names[0]
+  availability_zone = data.aws_availability_zones.available-AZs.names[0]
   cidr_block = "${var.AppSubnet1Param}"  
   tags = {
     Name = "${terraform.workspace}-AppSubnet1"
@@ -78,7 +79,7 @@ resource "aws_subnet" "AppSubnet1" {
 
 resource "aws_subnet" "AppSubnet2" {    
   vpc_id =  aws_vpc.CaseStudyVPC.id
-  availability_zone = data.aws_availability_zones.available-eu-central-1.names[1]
+  availability_zone = data.aws_availability_zones.available-AZs.names[1]
   cidr_block = "${var.AppSubnet2Param}"  
   tags = {
     Name = "${terraform.workspace}-AppSubnet2"
@@ -87,7 +88,7 @@ resource "aws_subnet" "AppSubnet2" {
 
 resource "aws_subnet" "DatabaseSubnet1" {    
   vpc_id =  aws_vpc.CaseStudyVPC.id
-  availability_zone = data.aws_availability_zones.available-eu-central-1.names[0]
+  availability_zone = data.aws_availability_zones.available-AZs.names[0]
   cidr_block = "${var.DatabaseSubnet1Param}"  
   tags = {
     Name = "${terraform.workspace}-DatabaseSubnet1"
@@ -96,7 +97,7 @@ resource "aws_subnet" "DatabaseSubnet1" {
 
 resource "aws_subnet" "DatabaseSubnet2" {    
   vpc_id =  aws_vpc.CaseStudyVPC.id
-  availability_zone = data.aws_availability_zones.available-eu-central-1.names[1]
+  availability_zone = data.aws_availability_zones.available-AZs.names[1]
   cidr_block = "${var.DatabaseSubnet2Param}"  
   tags = {
     Name = "${terraform.workspace}-DatabaseSubnet2"
@@ -129,7 +130,7 @@ resource "aws_route_table" "PrivateRouteTableAZ1" {
   vpc_id = aws_vpc.CaseStudyVPC.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.NATGateway1.id
+    nat_gateway_id = aws_nat_gateway.NATGateway1.id
   }
   tags = {
     Name = "${terraform.workspace}-PrivateRouteTableAZ1"
@@ -140,7 +141,7 @@ resource "aws_route_table" "PrivateRouteTableAZ2" {
   vpc_id = aws_vpc.CaseStudyVPC.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.NATGateway2.id
+    nat_gateway_id = aws_nat_gateway.NATGateway2.id
   }
   tags = {
     Name = "${terraform.workspace}-PrivateRouteTableAZ2"

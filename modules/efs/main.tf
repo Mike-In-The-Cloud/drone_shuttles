@@ -1,15 +1,33 @@
+#create a EFS File system
 resource "aws_efs_file_system" "Casestudy-EFS" {
-  creation_token = "Casestudy-EFS"
-
+  creation_token = "${terraform.workspace}-Casestudy-EFS"
+  encrypted = true
+  lifecycle_policy {
+    transition_to_ia = "AFTER_30_DAYS"
+  }
   tags = {
-    Name = "Casestudy-EFS"
+    Name = "${terraform.workspace}-Casestudy-EFS"
   }
 }
-
-resource "aws_efs_mount_target" "Casestudy-mount-efs" {
+#create a backup policy
+resource "aws_efs_backup_policy" "policy" {
   file_system_id = aws_efs_file_system.Casestudy-EFS.id
-  subnet_id      = var.efssubnetname
-  security_groups = [var.efssgname]
+
+  backup_policy {
+    status = "ENABLED"
+  }
+}
+#Mount Efs target to subnet in first AZ
+resource "aws_efs_mount_target" "Casestudy-mount-efs-subnet1" {
+  file_system_id = aws_efs_file_system.Casestudy-EFS.id
+  subnet_id      = var.efssubnetname1
+  security_groups = var.efssgname
+}
+#Mount Efs target to subnet in second AZ
+resource "aws_efs_mount_target" "Casestudy-mount-efs-subnet2" {
+  file_system_id = aws_efs_file_system.Casestudy-EFS.id
+  subnet_id      = var.efssubnetname2
+  security_groups = var.efssgname
 }
 
 /*
@@ -43,5 +61,12 @@ resource "aws_efs_file_system_policy" "policy" {
     ]
 }
 POLICY
+}
+
+resource "aws_efs_mount_target" "efs-mount" {
+   count = "length(aws_subnet.public_subnet.*.id)"
+   file_system_id  = "${aws_efs_file_system.magento-efs.id}"
+   subnet_id = "${element(aws_subnet.public_subnet.*.id, count.index)}"
+   security_groups = ["${aws_security_group.efs-sg.id}"]
 }
 */

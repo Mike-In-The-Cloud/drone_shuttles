@@ -34,7 +34,7 @@ output "rdsSubnetGroupName" {
   value = aws_db_subnet_group.auroraSubnetGroup.id
 }
 
-output "rdsSGName" {
+output "rdsSecurityGroupName" {
   value = aws_security_group.RDSSecurityGroup.id
 }
 

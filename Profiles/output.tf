@@ -36,7 +36,7 @@ output "RDSSubnetGroup" {
 }
 
 output "RDSSecurityGroup" {
-    value = module.casetsudy_vpc.rdsSGName
+    value = module.casetsudy_vpc.rdsSecurityGroupName
 }
 
 output "AppInstanceSecurityGroup" {
@@ -50,18 +50,34 @@ output "ElastiCacheSecurityGroup" {
 output "EFSMountTargetSecurityGroup" {
     value = module.casetsudy_vpc.EFSMountTargetSGName
 }
+#output - EFS Module
+output "EFSFilesystemID" {
+    value = module.casestudy_efs.EFSid
+}
+#outputs- database module
+output "ClusterName" {
+    value = module.casestudy_databse.ClusterName
+}
+output "reader-cluster-endpoint" {
+    value = module.casestudy_databse.reader-cluster-endpoint
+}
+
+output "writer-cluster-endpoint" {
+    value = module.casestudy_databse.writer-cluster-endpoint
+}
+
+output "Cache-configuration-endpoint" {
+    value = module.casestudy_databse.cache-endpoint
+}
 /*
 #output - Terraform_backend module
 output "s3bucketARN" {
     value = module.terraform_backend.bucket_arn
 }
-
+username
+passowrd
 output "s3bucketid" {
     value = module.terraform_backend.bucket_id
 }
 
-#output - EFS
-output "EFSfileID" {
-    value = module.casestudy_efs.EFSid
-}
 */

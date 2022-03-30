@@ -15,37 +15,37 @@ variable "db_password" {
 }
 
 variable "dbengine_type" {
-  type = string  
+  type = string
 }
 
 variable "dbengine_version" {
-  type = string  
+  type = string
 }
 
 variable "db_subnet_group" {
-  type = string  
+  type = string
 }
 
 variable "db_security_group" {
-  type = list 
+  type = list(any)
 }
 
 variable "cache_engine" {
-  type = string  
+  type = string
 }
 
 variable "cache_node_type" {
-  type = string  
+  type = string
 }
 
 variable "cache_parameter_group" {
-  type = string  
+  type = string
 }
 
 variable "cache_security_group" {
-  type = list  
+  type = list(any)
 }
 
 variable "cache_subnet_group" {
-  type = string  
+  type = string
 }

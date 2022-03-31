@@ -24,7 +24,21 @@ cache_node_type       = "cache.t3.micro"
 cache_parameter_group = "default.memcached1.6"
 cache_security_group  = [" "]
 cache_subnet_group    = " "
+
 #module-compute
 elb_security_group = [" "]
 elb_subnet_group   = [" "]
 vpcid              = " "
+LTsecuritygroup    = [" "]
+instancetype       = "t2.micro"
+amiid              = "ami-0dcc0ebde7b2e00db"
+appsubnets         = [" "]
+/*
+efsfileid         = " "
+awsregion         = " "
+databaseName      = " "
+writer_endpoint   = " "
+databaseusername  = " "
+databasepassowrd  = " "
+
+*/

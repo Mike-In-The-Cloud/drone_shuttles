@@ -244,7 +244,6 @@ resource "aws_security_group" "EFSMountTargetSecurityGroup" {
     to_port         = 80
     protocol        = "tcp"
     security_groups = ["${aws_security_group.AppInstanceSecurityGroup.id}"]
-    #cidr_blocks      = var.cidr_block_subnet
   }
 
   ingress {
@@ -257,6 +256,25 @@ resource "aws_security_group" "EFSMountTargetSecurityGroup" {
 
   tags = {
     Name = "${terraform.workspace}-EFSMountTargetSecurityGroup"
+  }
+}
+
+resource "aws_security_group" "LaunchTemplateSecurityGroup" {
+  name        = "${terraform.workspace}-LaunchTemplateSecurityGroup"
+  description = "Security Group allowing HTTP traffic from AppInstanceSecurityGroup"
+  vpc_id      = aws_vpc.CaseStudyVPC.id
+
+  ingress {
+    #description      = "TCP from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    #cidr_blocks = ["0.0.0.0/0"]
+    security_groups = ["${aws_security_group.AppInstanceSecurityGroup.id}"]
+  }
+
+  tags = {
+    Name = "${terraform.workspace}-LaunchTemplateSecurityGroup"
   }
 }
 

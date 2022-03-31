@@ -44,6 +44,9 @@ resource "aws_launch_template" "launch_template" {
   description   = "Launch Template for Case Study project"
   image_id      = var.imagetype
   instance_type = var.instancetype
+  user_data     = <<-EOF
+  
+  EOF
 }
 
 

@@ -39,6 +39,7 @@ resource "aws_lb_listener" "lb_listener" {
 }
 
 #Launch Template
+<<<<<<< HEAD
 resource "aws_launch_template" "launch_template_casestudy" {
   name_prefix = "${terraform.workspace}-CasestudyLT"
   description = "Launch Template for Case Study project"
@@ -89,6 +90,16 @@ resource "aws_launch_template" "launch_template_casestudy" {
   tags = {
     Name = "${terraform.workspace}-CasestudyLT"
   }
+=======
+resource "aws_launch_template" "launch_template" {
+  name_prefix   = "${terraform.workspace}-CasestudyLT"
+  description   = "Launch Template for Case Study project"
+  image_id      = var.imagetype
+  instance_type = var.instancetype
+  user_data     = <<-EOF
+  
+  EOF
+>>>>>>> f2166766dd5a448c2436b11ec4b6cf9c12243df5
 }
 
 
@@ -106,6 +117,7 @@ resource "aws_autoscaling_group" "autoscaling_group" {
     id      = aws_launch_template.launch_template_casestudy.id
     version = "$Latest"
   }
+<<<<<<< HEAD
   tags = [
     {
       "key"               = "Name",
@@ -120,3 +132,6 @@ resource "aws_autoscaling_attachment" "asg_attachment" {
   autoscaling_group_name = aws_autoscaling_group.autoscaling_group.id
   alb_target_group_arn   = aws_alb_target_group.target-group.arn
 }
+=======
+}
+>>>>>>> f2166766dd5a448c2436b11ec4b6cf9c12243df5

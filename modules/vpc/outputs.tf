@@ -49,3 +49,8 @@ output "ElastiCacheSGName" {
 output "EFSMountTargetSGName" {
   value = aws_security_group.EFSMountTargetSecurityGroup.id
 }
+
+output "LaunchTemplateSGName" {
+  value = aws_security_group.LaunchTemplateSecurityGroup.id
+}
+

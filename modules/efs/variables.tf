@@ -7,5 +7,5 @@ variable "efssubnetname2" {
 }
 
 variable "efssgname" {
-  type = list
+  type = list(any)
 }

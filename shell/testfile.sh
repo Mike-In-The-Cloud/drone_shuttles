@@ -1,14 +1,12 @@
 #!/bin/bash -xe
-EFSMOUNTID="$(var.efsfileid)"
-AWSREGION="$(var.awsregion)"
-DB_NAME="$(var.databaseName)"
-DB_HOSTNAME="$(var.writer_endpoint)"
-DB_USERNAME="$(var.databaseusername)"
-DB_PASSWORD="$(var.databasepassowrd)"
+DB_NAME="CasestudyDB"
+DB_HOSTNAME="dev-casestudydatabase.cluster-crtkgdxtaevy.eu-central-1.rds.amazonaws.com"
+DB_USERNAME="admin"
+DB_PASSWORD="admin123"
 WP_ADMIN="WPADMIN"
 WP_PASSWORD="WPADMIN123"
 WP_EMAIL="xyz@xyz.com"
-LB_HOSTNAME="$(var.albendpoint)"
+LB_HOSTNAME="dev-CasestudyLB-2113277150.eu-central-1.elb.amazonaws.com"
 yum update -y
 yum install -y amazon-linux-extras
 yum install -y awslogs httpd mysql gcc-c++
@@ -18,7 +16,7 @@ yum install -y php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,
 systemctl enable nfs-server.service
 systemctl start nfs-server.service
 mkdir -p /var/www/wordpress
-mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 $EFSMOUNTID.efs.$AWSREGION.amazonaws.com:/ /var/www/wordpress
+mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 fs-04c3b38101e6e129b.efs.eu-central-1.amazonaws.com:/ /var/www/wordpress
 
 ## create site config
 cat <<EOF >/etc/httpd/conf.d/wordpress.conf

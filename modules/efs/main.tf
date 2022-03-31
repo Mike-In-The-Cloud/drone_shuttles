@@ -1,7 +1,7 @@
 #create a EFS File system
 resource "aws_efs_file_system" "Casestudy-EFS" {
   creation_token = "${terraform.workspace}-Casestudy-EFS"
-  encrypted = true
+  encrypted      = true
   lifecycle_policy {
     transition_to_ia = "AFTER_30_DAYS"
   }
@@ -19,14 +19,14 @@ resource "aws_efs_backup_policy" "policy" {
 }
 #Mount Efs target to subnet in first AZ
 resource "aws_efs_mount_target" "Casestudy-mount-efs-subnet1" {
-  file_system_id = aws_efs_file_system.Casestudy-EFS.id
-  subnet_id      = var.efssubnetname1
+  file_system_id  = aws_efs_file_system.Casestudy-EFS.id
+  subnet_id       = var.efssubnetname1
   security_groups = var.efssgname
 }
 #Mount Efs target to subnet in second AZ
 resource "aws_efs_mount_target" "Casestudy-mount-efs-subnet2" {
-  file_system_id = aws_efs_file_system.Casestudy-EFS.id
-  subnet_id      = var.efssubnetname2
+  file_system_id  = aws_efs_file_system.Casestudy-EFS.id
+  subnet_id       = var.efssubnetname2
   security_groups = var.efssgname
 }
 

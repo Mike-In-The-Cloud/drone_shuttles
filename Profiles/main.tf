@@ -57,21 +57,22 @@ module "casestudy_compute" {
   instancetype       = var.instancetype
   amiid              = var.amiid
   appsubnets         = [module.casestudy_vpc.AppSubnet1Name, module.casestudy_vpc.AppSubnet2Name]
-/*
-  efsfileid        = module.casestudy_efs.EFSid
-  awsregion        = data.aws_region.current
-  databaseName     = module.casestudy_databse.dbname
-  writer_endpoint  = module.casestudy_databse.writer-cluster-endpoint
-  databaseusername = module.casestudy_databse.dbusername
-  databasepassowrd = module.casestudy_databse.dbpassword
-*/
+  efsfileid          = module.casestudy_efs.EFSid
+  database_name      = module.casestudy_databse.dbname
+  writer_endpoint    = module.casestudy_databse.writer-cluster-endpoint
+  database_username  = module.casestudy_databse.dbusername
+  database_password  = module.casestudy_databse.dbpassword
+  aws_region         = data.aws_region.current.name
+
 }
-/*
+
 module "casestudy_route53" {
   source = "../modules/route53"
+  alb_dns_name = module.casestudy_compute.loadbalancer_dns_name
+  alb_zone_id = module.casestudy_compute.loadbalancer_zone
 }
 
-
+/*
 module "terraform_state_backend" {
     source = "../modules/terraform_backend"
     stack_name      = var.stack_name

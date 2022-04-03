@@ -33,12 +33,12 @@ LTsecuritygroup    = [" "]
 instancetype       = "t2.micro"
 amiid              = "ami-0dcc0ebde7b2e00db"
 appsubnets         = [" "]
-/*
 efsfileid         = " "
-awsregion         = " "
-databaseName      = " "
+database_name      = " "
 writer_endpoint   = " "
-databaseusername  = " "
-databasepassowrd  = " "
-
-*/
+database_username  = " "
+database_password  = " "
+aws_region         = " "
+#Route 53
+alb_dns_name = " "
+alb_zone_id = " "

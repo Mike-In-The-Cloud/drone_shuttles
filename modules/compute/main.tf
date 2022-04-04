@@ -1,12 +1,13 @@
 #Load Balancer 
 resource "aws_lb" "loadbalancer" {
   name               = "${terraform.workspace}-CasestudyLB"
-  internal           = false
+  #internal           = false
   load_balancer_type = "application"
   security_groups    = var.elb_security_group
   subnets            = var.elb_subnet_group
+  idle_timeout       = "70"
 
-  enable_deletion_protection = true
+  #enable_deletion_protection = true
 
   tags = {
     Name = "${terraform.workspace}-CasestudyLB"
@@ -49,7 +50,6 @@ resource "aws_launch_template" "launch_template_casestudy" {
   monitoring {
     enabled = true
   }
-
   /*
   network_interfaces{
     #associate_carrier_ip_address = false
@@ -58,7 +58,7 @@ resource "aws_launch_template" "launch_template_casestudy" {
     description = "Primary network interface"
     #security_groups = var.LTsecuritygroup
   }
-  */
+ */
   placement {
     tenancy = "default"
   }
@@ -75,20 +75,12 @@ resource "aws_launch_template" "launch_template_casestudy" {
       volume_type           = "gp2"
     }
   }
-  user_data = filebase64("../shell/testfile.sh")
   #user_data = filebase64("../shell/testfile.sh")
-/*
-  EFSMOUNTID  = var.efsfileid
-  AWSREGION   = var.awsregion
-  DB_NAME     = var.databaseName
-  DB_HOSTNAME = var.writer_endpoint
-  DB_USERNAME = var.databaseusername
-  DB_PASSWORD = var.databasepassowrd
-  LB_HOSTNAME = aws_lb.loadbalancer.dns_name
-*/
+  user_data = base64encode(data.template_file.userdata.rendered)
   tags = {
     Name = "${terraform.workspace}-CasestudyLT"
   }
+
 resource "aws_launch_template" "launch_template" {
   name_prefix   = "${terraform.workspace}-CasestudyLT"
   description   = "Launch Template for Case Study project"
@@ -96,9 +88,26 @@ resource "aws_launch_template" "launch_template" {
   instance_type = var.instancetype
   user_data     = <<-EOF
   
-  EOF
+
 }
 
+#Userdata Bash Script variables
+data "template_file" "userdata" {
+  template = file("../shell/wordpress.sh")
+  depends_on = [var.database_name,var.database_username,var.writer_endpoint,var.database_password,var.efsfileid,var.aws_region]
+  vars = {
+        DB_NAME                    = var.database_name
+        DB_HOSTNAME                = var.writer_endpoint
+        DB_USERNAME                = var.database_username
+        DB_PASSWORD                = var.database_password
+        WP_ADMIN                   = "WPADMIN"
+        WP_PASSWORD                = "WPADMIN123"
+        WP_EMAIL                   = "xyz@xyz.com"
+        LB_HOSTNAME                = aws_lb.loadbalancer.dns_name
+        EFSMOUNTID                 = var.efsfileid
+        AWSREGION                  = var.aws_region
+  }
+}
 
 #AutoScaling Group
 resource "aws_autoscaling_group" "autoscaling_group" {
@@ -128,4 +137,4 @@ resource "aws_autoscaling_attachment" "asg_attachment" {
   autoscaling_group_name = aws_autoscaling_group.autoscaling_group.id
   alb_target_group_arn   = aws_alb_target_group.target-group.arn
 }
-}
+

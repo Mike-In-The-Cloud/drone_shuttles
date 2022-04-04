@@ -80,6 +80,15 @@ resource "aws_launch_template" "launch_template_casestudy" {
   tags = {
     Name = "${terraform.workspace}-CasestudyLT"
   }
+
+resource "aws_launch_template" "launch_template" {
+  name_prefix   = "${terraform.workspace}-CasestudyLT"
+  description   = "Launch Template for Case Study project"
+  image_id      = var.imagetype
+  instance_type = var.instancetype
+  user_data     = <<-EOF
+  
+
 }
 
 #Userdata Bash Script variables
@@ -128,3 +137,4 @@ resource "aws_autoscaling_attachment" "asg_attachment" {
   autoscaling_group_name = aws_autoscaling_group.autoscaling_group.id
   alb_target_group_arn   = aws_alb_target_group.target-group.arn
 }
+

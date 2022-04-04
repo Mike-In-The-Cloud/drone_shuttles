@@ -5,6 +5,13 @@ terraform {
       version = "~> 4.0"
     }
   }
+  backend "s3" {
+    bucket  = "pipeline-artifacts-casestudy-test"
+    encrypt = true
+    key     = "state/terraform.tfstate"
+    region = "us-east-1"
+    
+  }
 }
 
 data "aws_region" "current" {}

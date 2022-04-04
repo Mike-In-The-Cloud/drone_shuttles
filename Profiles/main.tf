@@ -12,8 +12,9 @@ data "aws_region" "current" {}
 module "casestudy_codepipeline"{
   source              = "../modules/pipeline"
 
+  dockerhub_credentials = var.dockerhub_credentials
   codestar_connector_credentials = var.codestar_connector_credentials
-  s3_id               = var.s3_id
+  s3_id               = module.casestudy_s3.s3_id
 }
 
 module "casestudy_s3"{

@@ -9,6 +9,17 @@ terraform {
 
 data "aws_region" "current" {}
 
+module "casestudy_codepipeline"{
+  source              = "../modules/pipeline"
+
+  codestar_connector_credentials = var.codestar_connector_credentials
+  s3_id               = var.s3_id
+}
+
+module "casestudy_s3"{
+  source              = "../modules/s3"
+}
+/*
 module "casestudy_vpc" {
   source               = "../modules/vpc"
   cidr_block           = var.cidr_block
@@ -65,7 +76,7 @@ module "casestudy_compute" {
   databaseusername = module.casestudy_databse.dbusername
   databasepassowrd = module.casestudy_databse.dbpassword
 */
-}
+
 /*
 module "casestudy_route53" {
   source = "../modules/route53"

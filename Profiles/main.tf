@@ -27,7 +27,7 @@ module "casestudy_codepipeline"{
 module "casestudy_s3"{
   source              = "../modules/s3"
 }
-/*
+
 module "casestudy_vpc" {
   source               = "../modules/vpc"
   cidr_block           = var.cidr_block
@@ -101,4 +101,3 @@ module "terraform_state_backend" {
 
 
 
-*/

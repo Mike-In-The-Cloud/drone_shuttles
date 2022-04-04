@@ -1,14 +1,14 @@
 #!/bin/bash -xe
-EFSMOUNTID="$(var.efsfileid)"
-AWSREGION="$(var.awsregion)"
-DB_NAME="$(var.databaseName)"
-DB_HOSTNAME="$(var.writer_endpoint)"
-DB_USERNAME="$(var.databaseusername)"
-DB_PASSWORD="$(var.databasepassowrd)"
-WP_ADMIN="WPADMIN"
-WP_PASSWORD="WPADMIN123"
-WP_EMAIL="xyz@xyz.com"
-LB_HOSTNAME="$(var.albendpoint)"
+DB_NAME=${DB_NAME}
+DB_HOSTNAME=${DB_HOSTNAME}
+DB_USERNAME=${DB_USERNAME}
+DB_PASSWORD=${DB_PASSWORD}
+WP_ADMIN=${WP_ADMIN}
+WP_PASSWORD=${WP_PASSWORD}
+WP_EMAIL=${WP_EMAIL}
+LB_HOSTNAME=${LB_HOSTNAME}
+EFSMOUNTID=${EFSMOUNTID}
+AWSREGION=${AWSREGION}
 yum update -y
 yum install -y amazon-linux-extras
 yum install -y awslogs httpd mysql gcc-c++
@@ -18,7 +18,7 @@ yum install -y php php-{pear,cgi,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,
 systemctl enable nfs-server.service
 systemctl start nfs-server.service
 mkdir -p /var/www/wordpress
-mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 $EFSMOUNTID.efs.$AWSREGION.amazonaws.com:/ /var/www/wordpress
+mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 "$EFSMOUNTID".efs."$AWSREGION".amazonaws.com:/ /var/www/wordpress
 
 ## create site config
 cat <<EOF >/etc/httpd/conf.d/wordpress.conf
@@ -98,18 +98,18 @@ GROUP=apache # <-- wordpress group
 ROOT='/var/www/wordpress' # <-- wordpress root directory
  
 # reset to safe defaults
-find ${ROOT} -exec chown ${OWNER}:${GROUP} {} \;
-find ${ROOT} -type d -exec chmod 755 {} \;
-find ${ROOT} -type f -exec chmod 644 {} \;
+find "$ROOT" -exec chown "$OWNER":"$GROUP" {} \;
+find "$ROOT" -type d -exec chmod 755 {} \;
+find "$ROOT" -type f -exec chmod 644 {} \;
  
 # allow wordpress to manage wp-config.php (but prevent world access)
-chgrp ${GROUP} ${ROOT}/wp-config.php
-chmod 660 ${ROOT}/wp-config.php
+chgrp "$GROUP" "$ROOT"/wp-config.php
+chmod 660 "$ROOT"/wp-config.php
  
 # allow wordpress to manage wp-content
-find ${ROOT}/wp-content -exec chgrp ${GROUP} {} \;
-find ${ROOT}/wp-content -type d -exec chmod 775 {} \;
-find ${ROOT}/wp-content -type f -exec chmod 664 {} \;
+find "$ROOT"/wp-content -exec chgrp "$GROUP" {} \;
+find "$ROOT"/wp-content -type d -exec chmod 775 {} \;
+find "$ROOT"/wp-content -type f -exec chmod 664 {} \;
 
 chkconfig httpd on
 service httpd start

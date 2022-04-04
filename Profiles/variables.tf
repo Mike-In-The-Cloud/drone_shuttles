@@ -102,26 +102,35 @@ variable "amiid" {
 variable "appsubnets" {
   type = list(any)
 }
-/*
-variable "efsfileid  " {
+
+variable "efsfileid" {
   type = string
 }
-variable "awsregion" {
+
+variable "database_name" {
   type = string
 }
-variable "databaseName " {
+variable "writer_endpoint" {
   type = string
 }
-variable "writer_endpoint " {
+variable "database_username" {
   type = string
 }
-variable "databaseusername" {
+variable "database_password" {
   type = string
 }
-variable "databasepassowrd" {
+variable "aws_region" {
   type = string
 }
-*/
+#Route 53
+variable "alb_dns_name" {
+  type = string
+}
+
+variable "alb_zone_id" {
+  type = string
+}
+
 /*
 #variables from terraform_backend module
 variable "stack_name" {

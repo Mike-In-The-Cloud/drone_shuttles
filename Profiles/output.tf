@@ -7,7 +7,7 @@ output "AWS_Region" {
 output "s3_id" {
   value = module.casestudy_s3.s3_id
   
-}
+ }
 
 #outputs from VPC Module
 output "VPCID" {

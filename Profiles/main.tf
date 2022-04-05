@@ -16,17 +16,17 @@ terraform {
 
 data "aws_region" "current" {}
 
-module "casestudy_codepipeline"{
-  source              = "../modules/pipeline"
+# module "casestudy_codepipeline"{
+#   source              = "../modules/pipeline"
 
-  dockerhub_credentials = var.dockerhub_credentials
-  codestar_connector_credentials = var.codestar_connector_credentials
-  s3_id               = module.casestudy_s3.s3_id
-}
+#   dockerhub_credentials = var.dockerhub_credentials
+#   codestar_connector_credentials = var.codestar_connector_credentials
+#   s3_id               = module.casestudy_s3.s3_id
+# }
 
-module "casestudy_s3"{
-  source              = "../modules/s3"
-}
+# module "casestudy_s3"{
+#   source              = "../modules/s3"
+# }
 
 module "casestudy_vpc" {
   source               = "../modules/vpc"

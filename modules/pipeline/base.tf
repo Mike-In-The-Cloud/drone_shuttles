@@ -1,7 +1,7 @@
 # plan build
 resource "aws_codebuild_project" "tf-plan" {
   name          = "tf-cicd-plan"
-  description   = "Build terraform IaC"
+  description   = "Plan terraform IaC"
   service_role  = aws_iam_role.tf-codebuild-role.arn
 
   artifacts {
@@ -22,7 +22,7 @@ resource "aws_codebuild_project" "tf-plan" {
 
 # apply build
 resource "aws_codebuild_project" "tf-apply" {
-  name          = "tf-cicd-plan"
+  name          = "tf-cicd-apply"
   description   = "Build terraform IaC"
   service_role  = aws_iam_role.tf-codebuild-role.arn
 
@@ -44,8 +44,8 @@ resource "aws_codebuild_project" "tf-apply" {
 
 # destroy build
 resource "aws_codebuild_project" "tf-destroy" {
-  name          = "tf-cicd-plan"
-  description   = "Build terraform IaC"
+  name          = "tf-cicd-destroy"
+  description   = "Destroy terraform IaC"
   service_role  = aws_iam_role.tf-codebuild-role.arn
 
   artifacts {

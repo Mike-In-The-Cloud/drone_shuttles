@@ -43,7 +43,7 @@ resource "aws_codebuild_project" "tf-apply" {
 }
 
 # destroy build
-resource "aws_codebuild_project" "tf-apply" {
+resource "aws_codebuild_project" "tf-destroy" {
   name          = "tf-cicd-plan"
   description   = "Build terraform IaC"
   service_role  = aws_iam_role.tf-codebuild-role.arn

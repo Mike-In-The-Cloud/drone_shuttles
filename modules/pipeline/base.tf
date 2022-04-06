@@ -1,4 +1,5 @@
-resource "aws_codebuild_project" "tf-build-IaC" {
+# plan build
+resource "aws_codebuild_project" "tf-plan" {
   name          = "tf-cicd-plan"
   description   = "Build terraform IaC"
   service_role  = aws_iam_role.tf-codebuild-role.arn
@@ -15,7 +16,51 @@ resource "aws_codebuild_project" "tf-build-IaC" {
     
  source {
      type   = "CODEPIPELINE"
-     buildspec = file("${path.module}/buildspec/buildspec.yml")
+     buildspec = file("${path.module}/buildspec/plan-buildspec.yml")
+ }
+}
+
+# apply build
+resource "aws_codebuild_project" "tf-apply" {
+  name          = "tf-cicd-plan"
+  description   = "Build terraform IaC"
+  service_role  = aws_iam_role.tf-codebuild-role.arn
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/standard:4.0"
+    type                        = "LINUX_CONTAINER"
+  }
+    
+ source {
+     type   = "CODEPIPELINE"
+     buildspec = file("${path.module}/buildspec/apply-buildspec.yml")
+ }
+}
+
+# destroy build
+resource "aws_codebuild_project" "tf-apply" {
+  name          = "tf-cicd-plan"
+  description   = "Build terraform IaC"
+  service_role  = aws_iam_role.tf-codebuild-role.arn
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/standard:4.0"
+    type                        = "LINUX_CONTAINER"
+  }
+    
+ source {
+     type   = "CODEPIPELINE"
+     buildspec = file("${path.module}/buildspec/destory-buildspec.yml")
  }
 }
 

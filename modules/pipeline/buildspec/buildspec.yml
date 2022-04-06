@@ -12,7 +12,7 @@ phases:
       - pwd
       - cd Profiles 
       - terraform init
-      - terraform workspace Dev
+      - terraform workspace select Dev || terraform workspace new Dev
       - terraform plan -var-file="../environment/input_vars.tfvars"
       
 

@@ -1,12 +1,21 @@
 version: 0.2
 phases:
+  install: 
+    commands: 
+      - "apt install unzip -y"
+      - "wget https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip"
+      - "unzip terraform_1.1.7_linux_amd64.zip"
+      - "mv terraform /usr/local/bin/"
   pre_build:
     commands:
-      - echo Logging in to Docker Hub...
-      - echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USER --password-stdin
+      - pwd
+      - cd Profiles 
       - terraform init
-      - terraform validate
+      - terraform workspace select Dev || terraform workspace new Dev
+      - terraform plan -var-file="../environment/input_vars.tfvars"
   
   build:
     commands:
       - terraform plan var-file="../environment/input_vars.tfvars" --auto-approve 
+
+

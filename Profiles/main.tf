@@ -9,6 +9,17 @@ terraform {
 
 data "aws_region" "current" {}
 
+module "casestudy_codepipeline"{
+  source              = "../modules/pipeline"
+
+  codestar_connector_credentials = var.codestar_connector_credentials
+  s3_id               = var.s3_id
+}
+
+module "casestudy_s3"{
+  source              = "../modules/s3"
+}
+/*
 module "casestudy_vpc" {
   source               = "../modules/vpc"
   cidr_block           = var.cidr_block
@@ -57,6 +68,7 @@ module "casestudy_compute" {
   instancetype       = var.instancetype
   amiid              = var.amiid
   appsubnets         = [module.casestudy_vpc.AppSubnet1Name, module.casestudy_vpc.AppSubnet2Name]
+
   efsfileid          = module.casestudy_efs.EFSid
   database_name      = module.casestudy_databse.dbname
   writer_endpoint    = module.casestudy_databse.writer-cluster-endpoint
@@ -66,8 +78,11 @@ module "casestudy_compute" {
 
 }
 
-module "terraform_state_backend" {
-  source = "../modules/terraform_backend"
+module "casestudy_route53" {
+  source = "../modules/route53"
+  alb_dns_name = module.casestudy_compute.loadbalancer_dns_name
+  alb_zone_id = module.casestudy_compute.loadbalancer_zone
 }
+
 
 

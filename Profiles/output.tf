@@ -3,6 +3,12 @@ output "AWS_Region" {
   value = data.aws_region.current.name
 }
 
+#outputs for S3 Module
+output "s3_id" {
+  value = module.s3.s3_id
+  
+}
+
 #outputs from VPC Module
 output "VPCID" {
   value = module.casestudy_vpc.vpc-id

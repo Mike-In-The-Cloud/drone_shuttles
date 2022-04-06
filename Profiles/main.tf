@@ -66,19 +66,8 @@ module "casestudy_compute" {
 
 }
 
-module "casestudy_route53" {
-  source = "../modules/route53"
-  alb_dns_name = module.casestudy_compute.loadbalancer_dns_name
-  alb_zone_id = module.casestudy_compute.loadbalancer_zone
-}
-
-/*
 module "terraform_state_backend" {
-    source = "../modules/terraform_backend"
-    stack_name      = var.stack_name
-  
+  source = "../modules/terraform_backend"
 }
 
 
-
-*/

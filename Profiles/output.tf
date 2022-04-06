@@ -105,19 +105,16 @@ output "loadbalancer_dns_arn" {
 output "zoneid_loadbalancer" {
   value = module.casestudy_compute.loadbalancer_zone
 }
-/*
-#Route 53 Module
-output "dns_domain_name" {
-  value = module.casestudy_route53.dev_dns_name
-}
 
 #output - Terraform_backend module
 output "s3bucketARN" {
-    value = module.terraform_backend.bucket_arn
+  value = module.terraform_state_backend.bucket_arn
 }
 
 output "s3bucketid" {
-    value = module.terraform_backend.bucket_id
+  value = module.terraform_state_backend.bucket_id
 }
 
-*/
+output "dynamo_db_name" {
+  value = module.terraform_state_backend.dynamo_db_name
+}

@@ -1,6 +1,6 @@
 #Load Balancer 
 resource "aws_lb" "loadbalancer" {
-  name               = "${terraform.workspace}-CasestudyLB"
+  name = "${terraform.workspace}-CasestudyLB"
   #internal           = false
   load_balancer_type = "application"
   security_groups    = var.elb_security_group
@@ -50,15 +50,6 @@ resource "aws_launch_template" "launch_template_casestudy" {
   monitoring {
     enabled = true
   }
-  /*
-  network_interfaces{
-    #associate_carrier_ip_address = false
-    associate_public_ip_address = false
-    delete_on_termination = true
-    description = "Primary network interface"
-    #security_groups = var.LTsecuritygroup
-  }
- */
   placement {
     tenancy = "default"
   }
@@ -84,19 +75,19 @@ resource "aws_launch_template" "launch_template_casestudy" {
 
 #Userdata Bash Script variables
 data "template_file" "userdata" {
-  template = file("../shell/wordpress.sh")
-  depends_on = [var.database_name,var.database_username,var.writer_endpoint,var.database_password,var.efsfileid,var.aws_region]
+  template   = file("../shell/wordpress.sh")
+  depends_on = [var.database_name, var.database_username, var.writer_endpoint, var.database_password, var.efsfileid, var.aws_region]
   vars = {
-        DB_NAME                    = var.database_name
-        DB_HOSTNAME                = var.writer_endpoint
-        DB_USERNAME                = var.database_username
-        DB_PASSWORD                = var.database_password
-        WP_ADMIN                   = "WPADMIN"
-        WP_PASSWORD                = "WPADMIN123"
-        WP_EMAIL                   = "xyz@xyz.com"
-        LB_HOSTNAME                = aws_lb.loadbalancer.dns_name
-        EFSMOUNTID                 = var.efsfileid
-        AWSREGION                  = var.aws_region
+    DB_NAME     = var.database_name
+    DB_HOSTNAME = var.writer_endpoint
+    DB_USERNAME = var.database_username
+    DB_PASSWORD = var.database_password
+    WP_ADMIN    = "WPADMIN"
+    WP_PASSWORD = "WPADMIN123"
+    WP_EMAIL    = "xyz@xyz.com"
+    LB_HOSTNAME = aws_lb.loadbalancer.dns_name
+    EFSMOUNTID  = var.efsfileid
+    AWSREGION   = var.aws_region
   }
 }
 

@@ -95,14 +95,15 @@ resource "aws_codepipeline" "cicd_pipeline" {
     stage {
         name ="Plan"
         action{
-            name = "Build"
-            category = "Build"
-            provider = "CodeBuild"
-            version = "1"
-            owner = "AWS"
-            input_artifacts = ["tf-code"]
-            configuration = {
-                ProjectName = "tf-cicd-plan"
+            name                = "Build"
+            category            = "Build"
+            provider            = "CodeBuild"
+            version             = "1"
+            owner               = "AWS"
+            input_artifacts     = ["tf-code"]
+            output_artifacts    = ["plan-output"]
+            configuration       = {
+                ProjectName     = "tf-cicd-plan"
             }
         }
     }

@@ -11,19 +11,17 @@ phases:
     commands:
       - pwd
       - cd Profiles 
-      - terraform init\
-      -backend-config="bucket=casestudy-backend-bucket" \ 
-      -backend-config="key=state/terraform.tfstate" \
-      -backend-config="region=us-east-1" \
-      -backend-config="encrypt=true" \
-      -backend-config="dynamodb_table=terraform-state-lock-dynamo"
+      - terraform init -backend-config="bucket=casestudy-backend-bucket" -backend-config="key=state/terraform.tfstate" -backend-config="region=us-east-1" -backend-config="encrypt=true" -backend-config="dynamodb_table=terraform-state-lock-dynamo"
   build:
     commands:
       - terraform workspace select Dev || terraform workspace new Dev
-      - terraform plan -var-file="../environment/input_vars.tfvars"
+      - terraform plan -var-file="../environment/input_vars.tfvars" -out="plan-output"
+      - mv plan-output ../plan-output
   post_build:
     commands:
       - echo "terraform plan completed on ´date´"
 
-
+artifacts:
+  files:
+    - plan-output
 

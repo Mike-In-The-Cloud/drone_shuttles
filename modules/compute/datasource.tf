@@ -1,7 +1,7 @@
 data "aws_availability_zones" "available-AZ" {
   state = "available"
 }
-
+ 
 /*
 data "aws_ami" "amiid" {
   most_recent      = true

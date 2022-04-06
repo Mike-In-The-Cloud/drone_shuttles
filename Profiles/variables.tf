@@ -135,7 +135,19 @@ variable "database_password" {
 variable "aws_region" {
   type = string
 }
-#terraform_backend
-variable "s3_bucketname" {
-
+#Route 53
+variable "alb_dns_name" {
+  type = string
 }
+
+variable "alb_zone_id" {
+  type = string
+}
+
+/*
+#variables from terraform_backend module
+variable "stack_name" {
+  type = string
+  #default = "first"
+}
+*/

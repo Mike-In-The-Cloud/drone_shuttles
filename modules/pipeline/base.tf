@@ -102,7 +102,7 @@ resource "aws_codepipeline" "cicd_pipeline" {
             owner = "AWS"
             input_artifacts = ["tf-code"]
             configuration = {
-                ProjectName = "tf-cicd-plan"
+                ProjectName = "tf-plan"
             }
         }
     }
@@ -130,23 +130,38 @@ resource "aws_codepipeline" "cicd_pipeline" {
             owner = "AWS"
             input_artifacts = ["tf-code"]
             configuration = {
-                ProjectName = "tf-cicd-apply"
+                ProjectName = "tf-build"
             }
         }
     }
 
-# manual approval    
-stage {
-        name = "Destory"
+# manual approval     
+    stage {
+        name = "Approve Destory"
         action {
-            name     = "Approval"
+            name     = "Approve Destroy"
             category = "Approval"
             owner    = "AWS"
             provider = "Manual"
             version  = "1"
 
         }
-    }  
+    } 
+    # destroy
+    stage {
+        name ="Destroy"
+        action{
+            name = "Destory"
+            category = "Build"
+            provider = "CodeBuild"
+            version = "1"
+            owner = "AWS"
+            input_artifacts = ["tf-code"]
+            configuration = {
+                ProjectName = "tf-destory"
+            }
+        }
+    } 
 
 
 }

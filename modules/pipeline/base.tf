@@ -137,9 +137,9 @@ resource "aws_codepipeline" "cicd_pipeline" {
 
 # manual approval     
     stage {
-        name = "Approve Destory"
+        name = "Approve_Destory"
         action {
-            name     = "Approve Destroy"
+            name     = "Approve_Destroy"
             category = "Approval"
             owner    = "AWS"
             provider = "Manual"

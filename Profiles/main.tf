@@ -68,22 +68,22 @@ module "casestudy_databse" {
 
 }
 
-module "casestudy_compute" {
-  source             = "../modules/compute"
-  elb_security_group = [module.casestudy_vpc.AppinstanceSGName]
-  elb_subnet_group   = [module.casestudy_vpc.PublicSubnet1Name, module.casestudy_vpc.PublicSubnet2Name]
-  vpcid              = module.casestudy_vpc.vpc-id
-  LTsecuritygroup    = [module.casestudy_vpc.LaunchTemplateSGName, module.casestudy_vpc.rdsSecurityGroupName, module.casestudy_vpc.ElastiCacheSGName, module.casestudy_vpc.EFSMountTargetSGName]
-  instancetype       = var.instancetype
-  amiid              = var.amiid
-  appsubnets         = [module.casestudy_vpc.AppSubnet1Name, module.casestudy_vpc.AppSubnet2Name]
+# module "casestudy_compute" {
+#   source             = "../modules/compute"
+#   elb_security_group = [module.casestudy_vpc.AppinstanceSGName]
+#   elb_subnet_group   = [module.casestudy_vpc.PublicSubnet1Name, module.casestudy_vpc.PublicSubnet2Name]
+#   vpcid              = module.casestudy_vpc.vpc-id
+#   LTsecuritygroup    = [module.casestudy_vpc.LaunchTemplateSGName, module.casestudy_vpc.rdsSecurityGroupName, module.casestudy_vpc.ElastiCacheSGName, module.casestudy_vpc.EFSMountTargetSGName]
+#   instancetype       = var.instancetype
+#   amiid              = var.amiid
+#   appsubnets         = [module.casestudy_vpc.AppSubnet1Name, module.casestudy_vpc.AppSubnet2Name]
 
-  efsfileid          = module.casestudy_efs.EFSid
-  database_name      = module.casestudy_databse.dbname
-  writer_endpoint    = module.casestudy_databse.writer-cluster-endpoint
-  database_username  = module.casestudy_databse.dbusername
-  database_password  = module.casestudy_databse.dbpassword
-  aws_region         = data.aws_region.current.name
+#   efsfileid          = module.casestudy_efs.EFSid
+#   database_name      = module.casestudy_databse.dbname
+#   writer_endpoint    = module.casestudy_databse.writer-cluster-endpoint
+#   database_username  = module.casestudy_databse.dbusername
+#   database_password  = module.casestudy_databse.dbpassword
+#   aws_region         = data.aws_region.current.name
 
 }
 

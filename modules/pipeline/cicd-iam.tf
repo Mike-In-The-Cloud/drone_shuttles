@@ -71,10 +71,11 @@ EOF
 data "aws_iam_policy_document" "tf-cicd-build-policies" {
     statement{
         sid = ""
-        actions = ["logs:*", "s3:*", "codebuild:*", "secretsmanager:*","iam:*"]
+        actions = ["logs:*", "s3:*", "codebuild:*", "secretsmanager:GetSecretValue","iam:*"]
         resources = ["*"]
         effect = "Allow"
     }
+    
 }
 
 resource "aws_iam_policy" "tf-cicd-build-policy" {

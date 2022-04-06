@@ -35,7 +35,7 @@ amiid              = "ami-0dcc0ebde7b2e00db"
 appsubnets         = [" "]
 
 #module-pipeline
-codestar_connector_credentials = "arn:aws:codestar-connections:us-east-1:878915726377:connection/9273d09a-8c3b-4701-875b-dbfc83251681"
+codestar_connector_credentials = "arn:aws:codestar-connections:us-east-1:878915726377:connection/acae1ec3-3f96-4268-9358-370a730d385d"
 dockerhub_credentials = "arn:aws:secretsmanager:us-east-1:878915726377:secret:codebuild/docker-dJzx5x"
 s3_id              = " "
 

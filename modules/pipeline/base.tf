@@ -1,6 +1,6 @@
-resource "aws_codebuild_project" "tf-plan" {
-  name          = "tf-cicd-plan2"
-  description   = "Plan stage for terraform"
+resource "aws_codebuild_project" "tf-build-IaC" {
+  name          = "tf-cicd-plan"
+  description   = "Build terraform IaC"
   service_role  = aws_iam_role.tf-codebuild-role.arn
 
   artifacts {
@@ -9,45 +9,15 @@ resource "aws_codebuild_project" "tf-plan" {
 
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "hashicorp/terraform:0.14.3"
+    image                       = "aws/codebuild/standard:4.0"
     type                        = "LINUX_CONTAINER"
-    image_pull_credentials_type = "SERVICE_ROLE"
-    registry_credential{
-        credential = var.dockerhub_credentials
-        credential_provider = "SECRETS_MANAGER"
-    }
- }
- source {
-     type   = "CODEPIPELINE"
-     buildspec = file("buildspec/plan-buildspec.yml")
- }
-}
-
-resource "aws_codebuild_project" "tf-apply" {
-  name          = "tf-cicd-apply"
-  description   = "Apply stage for terraform"
-  service_role  = aws_iam_role.tf-codebuild-role.arn
-
-  artifacts {
-    type = "CODEPIPELINE"
   }
-
-  environment {
-    compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "hashicorp/terraform:0.14.3"
-    type                        = "LINUX_CONTAINER"
-    image_pull_credentials_type = "SERVICE_ROLE"
-    registry_credential{
-        credential = var.dockerhub_credentials
-        credential_provider = "SECRETS_MANAGER"
-    }
- }
+    
  source {
      type   = "CODEPIPELINE"
-     buildspec = file("buildspec/apply-buildspec.yml")
+     buildspec = file("${path.module}/buildspec/buildspec.yml")
  }
 }
-
 
 resource "aws_codepipeline" "cicd_pipeline" {
 
@@ -69,14 +39,14 @@ resource "aws_codepipeline" "cicd_pipeline" {
             version = "1"
             output_artifacts = ["tf-code"]
             configuration = {
-                FullRepositoryId = "davoclock/aws-cicd-pipeline"
-                BranchName   = "master"
+                FullRepositoryId = "Mike-In-The-Cloud/drone_shuttles"
+                BranchName   = "dev-code-pipeline"
                 ConnectionArn = var.codestar_connector_credentials
                 OutputArtifactFormat = "CODE_ZIP"
             }
         }
     }
-
+# build stage one
     stage {
         name ="Plan"
         action{
@@ -91,7 +61,20 @@ resource "aws_codepipeline" "cicd_pipeline" {
             }
         }
     }
+# manual approval
+    stage {
+        name = "Approve_Build"
+        action {
+            name     = "Approval"
+            category = "Approval"
+            owner    = "AWS"
+            provider = "Manual"
+            version  = "1"
 
+        }
+    }   
+
+# build stage 2
     stage {
         name ="Deploy"
         action{
@@ -107,4 +90,19 @@ resource "aws_codepipeline" "cicd_pipeline" {
         }
     }
 
+# manual approval    
+stage {
+        name = "Destory"
+        action {
+            name     = "Approval"
+            category = "Approval"
+            owner    = "AWS"
+            provider = "Manual"
+            version  = "1"
+
+        }
+    }  
+
+
 }
+    

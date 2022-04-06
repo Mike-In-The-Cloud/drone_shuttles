@@ -13,7 +13,7 @@ phases:
       - cd Profiles 
       - terraform init
       - terraform workspace new Dev
-      - terraform plan -var-file="../environment/intput_var.auto.tfvars" -auto-approve
+      - terraform plan -var-file="../environment/intput_var.auto.tfvars"
 
   build:
     commands:

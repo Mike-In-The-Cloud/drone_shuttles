@@ -60,7 +60,7 @@ resource "aws_codebuild_project" "tf-destroy" {
     
  source {
      type   = "CODEPIPELINE"
-     buildspec = file("${path.module}/buildspec/destory-buildspec.yml")
+     buildspec = file("${path.module}/buildspec/destroy-buildspec.yml")
  }
 }
 

@@ -13,14 +13,15 @@ phases:
       - cd Profiles 
       - terraform init
       - terraform workspace Dev
-      - terraform plan -var-file="../environment/input_var.tfvars"
+      - terraform plan -var-file="../environment/input_vars.tfvars"
+      
 
   build:
     commands:
-      - terraform build -var-file="../environment/input_var.tfvars" -auto-approve
+      - terraform build -var-file="../environment/input_vars.tfvars" -auto-approve
       - echo "terraform plan completed on ´date´"
 
   post_build:
     commands:
-      - terraform destroy -var-file="../environment/input_var.tfvars" -auto-approve
+      - terraform destroy -var-file="../environment/input_vars.tfvars" -auto-approve
       - echo "terraform plan completed on ´date´"

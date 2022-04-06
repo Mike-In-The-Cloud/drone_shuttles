@@ -10,6 +10,7 @@ terraform {
     encrypt = true
     key     = "state/terraform.tfstate"
     region = "us-east-1"
+    dynamodb_table = "terraform-state-lock-dynamo"
     
   }
 }
@@ -28,17 +29,17 @@ module "casestudy_s3"{
   source              = "../modules/s3"
 }
 
-# module "casestudy_vpc" {
-#   source               = "../modules/vpc"
-#   cidr_block           = var.cidr_block
-#   PublicSubnet1Param   = var.PublicSubnet1Param
-#   PublicSubnet2Param   = var.PublicSubnet2Param
-#   AppSubnet1Param      = var.AppSubnet1Param
-#   AppSubnet2Param      = var.AppSubnet2Param
-#   DatabaseSubnet1Param = var.DatabaseSubnet1Param
-#   DatabaseSubnet2Param = var.DatabaseSubnet2Param
+module "casestudy_vpc" {
+  source               = "../modules/vpc"
+  cidr_block           = var.cidr_block
+  PublicSubnet1Param   = var.PublicSubnet1Param
+  PublicSubnet2Param   = var.PublicSubnet2Param
+  AppSubnet1Param      = var.AppSubnet1Param
+  AppSubnet2Param      = var.AppSubnet2Param
+  DatabaseSubnet1Param = var.DatabaseSubnet1Param
+  DatabaseSubnet2Param = var.DatabaseSubnet2Param
 
-# }
+}
 
 # module "casestudy_efs" {
 #   source         = "../modules/efs"

@@ -9,62 +9,63 @@ output "s3_id" {
   
  }
 
-# #outputs from VPC Module
-# output "VPCID" {
-#   value = module.casestudy_vpc.vpc-id
-# }
+#outputs from VPC Module
+output "VPCID" {
+  value = module.casestudy_vpc.vpc-id
+}
 
-# output "PublicSubnet1" {
-#   value = module.casestudy_vpc.PublicSubnet1Name
-# }
+output "PublicSubnet1" {
+  value = module.casestudy_vpc.PublicSubnet1Name
+}
 
-# output "PublicSubnet2" {
-#   value = module.casestudy_vpc.PublicSubnet2Name
-# }
+output "PublicSubnet2" {
+  value = module.casestudy_vpc.PublicSubnet2Name
+}
 
-# output "AppSubnet1" {
-#   value = module.casestudy_vpc.AppSubnet1Name
-# }
+output "AppSubnet1" {
+  value = module.casestudy_vpc.AppSubnet1Name
+}
 
-# output "AppSubnet2" {
-#   value = module.casestudy_vpc.AppSubnet2Name
-# }
+output "AppSubnet2" {
+  value = module.casestudy_vpc.AppSubnet2Name
+}
 
-# output "DatabaseSubnet1" {
-#   value = module.casestudy_vpc.DatabaseSubnet1Name
-# }
+output "DatabaseSubnet1" {
+  value = module.casestudy_vpc.DatabaseSubnet1Name
+}
 
-# output "DatabaseSubnet2" {
-#   value = module.casestudy_vpc.DatabaseSubnet2Name
-# }
+output "DatabaseSubnet2" {
+  value = module.casestudy_vpc.DatabaseSubnet2Name
+}
 
-# output "ElasticacheSubnetGroup" {
-#   value = module.casestudy_vpc.ElasticacheSubnetGroupName
-# }
+output "ElasticacheSubnetGroup" {
+  value = module.casestudy_vpc.ElasticacheSubnetGroupName
+}
 
-# output "RDSSubnetGroup" {
-#   value = module.casestudy_vpc.rdsSubnetGroupName
-# }
+output "RDSSubnetGroup" {
+  value = module.casestudy_vpc.rdsSubnetGroupName
+}
 
-# output "RDSSecurityGroup" {
-#   value = module.casestudy_vpc.rdsSecurityGroupName
-# }
+output "RDSSecurityGroup" {
+  value = module.casestudy_vpc.rdsSecurityGroupName
+}
 
-# output "AppInstanceSecurityGroup" {
-#   value = module.casestudy_vpc.AppinstanceSGName
-# }
+output "AppInstanceSecurityGroup" {
+  value = module.casestudy_vpc.AppinstanceSGName
+}
 
-# output "ElastiCacheSecurityGroup" {
-#   value = module.casestudy_vpc.ElastiCacheSGName
-# }
+output "ElastiCacheSecurityGroup" {
+  value = module.casestudy_vpc.ElastiCacheSGName
+}
 
-# output "EFSMountTargetSecurityGroup" {
-#   value = module.casestudy_vpc.EFSMountTargetSGName
-# }
+output "EFSMountTargetSecurityGroup" {
+  value = module.casestudy_vpc.EFSMountTargetSGName
+}
 
-# output "LaunchTemplateSecurityGroup" {
-#   value = module.casestudy_vpc.LaunchTemplateSGName
-# }
+output "LaunchTemplateSecurityGroup" {
+  value = module.casestudy_vpc.LaunchTemplateSGName
+}
+
 # #output - EFS Module
 # output "EFSFilesystemID" {
 #   value = module.casestudy_efs.EFSid

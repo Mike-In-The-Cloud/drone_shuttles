@@ -11,7 +11,12 @@ phases:
     commands:
       - pwd
       - cd Profiles 
-      - terraform init
+      - terraform init\
+      -backend-config="bucket=casestudy-backend-bucket" \ 
+      -backend-config="key=state/terraform.tfstate" \
+      -backend-config="region=us-east-1" \
+      -backend-config="encrypt=true" \
+      -backend-config="dynamodb_table=terraform-state-lock-dynamo"
   build:
     commands:
       - terraform workspace select Dev || terraform workspace new Dev

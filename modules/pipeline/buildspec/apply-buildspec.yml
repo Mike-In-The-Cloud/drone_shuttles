@@ -15,4 +15,5 @@ phases:
   
   build:
     commands:
+      - terraform plan -var-file="../environment/input_vars.tfvars"
       - terraform apply -var-file="../environment/input_vars.tfvars" -auto-approve 

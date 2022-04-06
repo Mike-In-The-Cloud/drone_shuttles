@@ -1,5 +1,6 @@
 version: 0.2
-phases:
+
+phases: 
   install: 
     commands: 
       - "apt install unzip -y"
@@ -11,11 +12,13 @@ phases:
       - pwd
       - cd Profiles 
       - terraform init
-      - terraform workspace select Dev || terraform workspace new Dev
-      - terraform plan -var-file="../environment/input_vars.tfvars"
-  
   build:
     commands:
-      - terraform plan var-file="../environment/input_vars.tfvars" --auto-approve 
+      - terraform workspace select Dev || terraform workspace new Dev
+      - terraform plan -var-file="../environment/input_vars.tfvars"
+  post_build:
+    commands:
+      - echo "terraform plan completed on ´date´"
+
 
 

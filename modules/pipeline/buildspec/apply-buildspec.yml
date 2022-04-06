@@ -8,8 +8,9 @@ phases:
       - "mv terraform /usr/local/bin/"
   pre_build:
     commands:
+      - pwd
+      - cd Profiles 
       - terraform init
-      - terraform validate
       - terraform workspace select Dev || terraform workspace new Dev
   
   build:

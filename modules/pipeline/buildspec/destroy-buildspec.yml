@@ -14,4 +14,4 @@ phases:
   
   build:
     commands:
-      - terraform destory var-file="../environment/input_vars.tfvars" -auto-approve 
+      - terraform destory -var-file="../environment/input_vars.tfvars" -auto-approve 

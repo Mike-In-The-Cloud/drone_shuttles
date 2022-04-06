@@ -1,0 +1,26 @@
+version: 0.2
+
+phases: 
+  install: 
+    commands: 
+      - "apt install unzip -y"
+      - "wget https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip"
+      - "unzip terraform_1.1.7_linux_amd64.zip"
+      - "mv terraform /usr/local/bin/"
+  pre_build:
+    commands:
+      - pwd
+      - cd Profiles 
+      - terraform init
+      - terraform workspace new Dev
+      - terraform plan -var-file="../environment/intput_var.auto.tfvars" -auto-approve
+
+  build:
+    commands:
+      - terraform build -var-file="../environment/intput_var.auto.tfvars" -auto-approve
+      - echo "terraform plan completed on ´date´"
+
+  post_build:
+    commands:
+      - terraform destroy -var-file="../environment/intput_var.auto.tfvars" -auto-approve
+      - echo "terraform plan completed on ´date´"

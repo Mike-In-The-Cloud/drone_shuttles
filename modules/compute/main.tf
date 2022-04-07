@@ -39,58 +39,6 @@ resource "aws_lb_listener" "lb_listener" {
 }
 
 #Launch Template
-<<<<<<< HEAD
-resource "aws_launch_template" "launch_template_casestudy" {
-  name_prefix = "${terraform.workspace}-CasestudyLT"
-  description = "Launch Template for Case Study project"
-  #image_id      = data.aws_ami.amiid.id
-  image_id               = var.amiid
-  instance_type          = var.instancetype
-  vpc_security_group_ids = var.LTsecuritygroup
-  monitoring {
-    enabled = true
-  }
-
-  /*
-  network_interfaces{
-    #associate_carrier_ip_address = false
-    associate_public_ip_address = false
-    delete_on_termination = true
-    description = "Primary network interface"
-    #security_groups = var.LTsecuritygroup
-  }
-  */
-  placement {
-    tenancy = "default"
-  }
-  private_dns_name_options {
-    hostname_type = "ip-name"
-  }
-  ebs_optimized = false
-  block_device_mappings {
-    device_name = "/dev/xvda"
-
-    ebs {
-      volume_size           = 8
-      delete_on_termination = true
-      volume_type           = "gp2"
-    }
-  }
-  user_data = filebase64("../shell/testfile.sh")
-  #user_data = filebase64("../shell/testfile.sh")
-/*
-  EFSMOUNTID  = var.efsfileid
-  AWSREGION   = var.awsregion
-  DB_NAME     = var.databaseName
-  DB_HOSTNAME = var.writer_endpoint
-  DB_USERNAME = var.databaseusername
-  DB_PASSWORD = var.databasepassowrd
-  LB_HOSTNAME = aws_lb.loadbalancer.dns_name
-*/
-  tags = {
-    Name = "${terraform.workspace}-CasestudyLT"
-  }
-=======
 resource "aws_launch_template" "launch_template" {
   name_prefix   = "${terraform.workspace}-CasestudyLT"
   description   = "Launch Template for Case Study project"
@@ -99,7 +47,6 @@ resource "aws_launch_template" "launch_template" {
   user_data     = <<-EOF
   
   EOF
->>>>>>> f2166766dd5a448c2436b11ec4b6cf9c12243df5
 }
 
 
